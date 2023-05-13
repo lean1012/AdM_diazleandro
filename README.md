@@ -25,3 +25,9 @@ Los Cortex M3 / M4 / M7 tienen como objetivo tener una mayor performance, para e
 Explique
 
 Los procesadores más recientes traen un conjunto de instrucciones adicional llamado Thumb, de 16 bits de longitud en lugar de 32 bits. Esto hace que al tener la mitad de longitud, más instrucciones entran en una misma cantidad de memoria que instrucciones de 32 bits.
+
+3. ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este
+tipo de arquitectura?
+
+Arquitecturas Load-Store solamente procesará (suma, resta, etc) valores que estén en sus registros o que esten especificados en la instrucción y siempre se obtendrá el resultado en un registro. Este tipo de arquitecturas no tienen instrucciones que realicen operaciones de memoria a memoria. Las únicas operaciones que se aplican a la memoria son aquellas
+que copian datos de la memoria en los registros o de registros a memoria.
