@@ -31,3 +31,23 @@ tipo de arquitectura?
 
 Arquitecturas Load-Store solamente procesará (suma, resta, etc) valores que estén en sus registros o que esten especificados en la instrucción y siempre se obtendrá el resultado en un registro. Este tipo de arquitecturas no tienen instrucciones que realicen operaciones de memoria a memoria. Las únicas operaciones que se aplican a la memoria son aquellas
 que copian datos de la memoria en los registros o de registros a memoria.
+
+4. ¿Cómo es el mapa de memoria de la familia?
+
+El mapa de memoria del cortex es un mapa de 4GB continuo de direcciones donde se mapea la memoria ram, la memoria flash y los periféricos. Esto hace que sea muy fácil acceder en C tanto a la memoria ram, periféricos, etc a través de punteros.
+
+5. 
+
+6. 
+
+7. ¿Qué se entiende por modelo de registros ortogonal? Dé un ejemplo
+
+Los registros ortogonales son los que al modificar uno, no afectamos el comportamiento de otro registro.
+
+14. ¿Qué es el CMSIS? ¿Qué función cumple? ¿Quién lo provee? ¿Qué ventajas aporta?
+
+El CMSIS es una librería provista por ARM que permiten usar funcionalidades estandar de Cortex, esto hace que a la hora de programar utilizando CMSIS es que es muy facil portar el programa a otro Cortex.
+
+18. ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
+
+El Systick es el periferico que se utiliza en los sistemas operativos para llevar una base de tiempo.
