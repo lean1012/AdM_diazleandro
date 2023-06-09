@@ -1,42 +1,9 @@
-18:05:20 **** Incremental Build of configuration Debug for project adm_c16 ****
+22:08:30 **** Incremental Build of configuration Debug for project adm_c16 ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'test':
-../Core/Src/main.c:182:20: warning: passing argument 1 of 'productoEscalar16' from incompatible pointer type [-Wincompatible-pointer-types]
-  182 |  productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
-      |                    ^~~~~~~~~~~
-      |                    |
-      |                    uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:139:41: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  139 | static void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                               ~~~~~~~~~~^~~~~~~~
-../Core/Src/main.c:182:32: warning: passing argument 2 of 'productoEscalar16' from incompatible pointer type [-Wincompatible-pointer-types]
-  182 |  productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
-      |                                ^~~~~~~~~~~~
-      |                                |
-      |                                uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:139:61: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  139 | static void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                                                   ~~~~~~~~~~^~~~~~~~~
-../Core/Src/main.c:184:20: warning: passing argument 1 of 'productoEscalar12' from incompatible pointer type [-Wincompatible-pointer-types]
-  184 |  productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-      |                    ^~~~~~~~~~~
-      |                    |
-      |                    uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:151:41: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  151 | static void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                               ~~~~~~~~~~^~~~~~~~
-../Core/Src/main.c:184:32: warning: passing argument 2 of 'productoEscalar12' from incompatible pointer type [-Wincompatible-pointer-types]
-  184 |  productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-      |                                ^~~~~~~~~~~~
-      |                                |
-      |                                uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:151:61: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  151 | static void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                                                   ~~~~~~~~~~^~~~~~~~~
 ../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:226:18: warning: unused variable 'Resultado' [-Wunused-variable]
-  226 |   const uint32_t Resultado = asm_sum (5, 3);
+../Core/Src/main.c:257:18: warning: unused variable 'Resultado' [-Wunused-variable]
+  257 |   const uint32_t Resultado = asm_sum (5, 3);
       |                  ^~~~~~~~~
 arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: adm_c16.elf
@@ -45,59 +12,131 @@ arm-none-eabi-size   adm_c16.elf
 arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
 arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
    text	   data	    bss	    dec	    hex	filename
-  12956	     20	   3492	  16468	   4054	adm_c16.elf
+  13432	     20	   3492	  16944	   4230	adm_c16.elf
 Finished building: default.size.stdout
  
 Finished building: adm_c16.bin
  
 Finished building: adm_c16.list
  
-18:05:24 **** Incremental Build of configuration Debug for project adm_c16 ****
+22:08:34 **** Incremental Build of configuration Debug for project adm_c16 ****
 make -j8 all 
 arm-none-eabi-size   adm_c16.elf 
    text	   data	    bss	    dec	    hex	filename
-  12956	     20	   3492	  16468	   4054	adm_c16.elf
+  13432	     20	   3492	  16944	   4230	adm_c16.elf
 Finished building: default.size.stdout
  
-18:06:28 **** Incremental Build of configuration Debug for project adm_c16 ****
+22:11:32 **** Incremental Build of configuration Debug for project adm_c16 ****
 make -j8 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_func.d" -MT"Core/Src/asm_func.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_func.o" "../Core/Src/asm_func.S"
+arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: adm_c16.elf
+ 
+arm-none-eabi-size   adm_c16.elf 
+arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
+arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
+   text	   data	    bss	    dec	    hex	filename
+  13432	     20	   3492	  16944	   4230	adm_c16.elf
+Finished building: default.size.stdout
+ 
+Finished building: adm_c16.bin
+ 
+Finished building: adm_c16.list
+ 
+22:12:31 **** Incremental Build of configuration Debug for project adm_c16 ****
+make -j8 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_func.d" -MT"Core/Src/asm_func.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_func.o" "../Core/Src/asm_func.S"
+arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: adm_c16.elf
+ 
+arm-none-eabi-size   adm_c16.elf 
+arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
+arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
+   text	   data	    bss	    dec	    hex	filename
+  13432	     20	   3492	  16944	   4230	adm_c16.elf
+Finished building: default.size.stdout
+ 
+Finished building: adm_c16.bin
+ 
+Finished building: adm_c16.list
+ 
+22:26:35 **** Incremental Build of configuration Debug for project adm_c16 ****
+make -j8 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_func.d" -MT"Core/Src/asm_func.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_func.o" "../Core/Src/asm_func.S"
+arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: adm_c16.elf
+ 
+arm-none-eabi-size   adm_c16.elf 
+arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
+arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
+   text	   data	    bss	    dec	    hex	filename
+  13436	     20	   3492	  16948	   4234	adm_c16.elf
+Finished building: default.size.stdout
+ 
+Finished building: adm_c16.bin
+ 
+Finished building: adm_c16.list
+ 
+22:27:21 **** Incremental Build of configuration Debug for project adm_c16 ****
+make -j8 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_func.d" -MT"Core/Src/asm_func.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_func.o" "../Core/Src/asm_func.S"
+arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: adm_c16.elf
+ 
+arm-none-eabi-size   adm_c16.elf 
+arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
+arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
+   text	   data	    bss	    dec	    hex	filename
+  13436	     20	   3492	  16948	   4234	adm_c16.elf
+Finished building: default.size.stdout
+ 
+Finished building: adm_c16.bin
+ 
+Finished building: adm_c16.list
+ 
+22:30:15 **** Incremental Build of configuration Debug for project adm_c16 ****
+make -j8 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_func.d" -MT"Core/Src/asm_func.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_func.o" "../Core/Src/asm_func.S"
+arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: adm_c16.elf
+ 
+arm-none-eabi-size   adm_c16.elf 
+arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
+arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
+   text	   data	    bss	    dec	    hex	filename
+  13436	     20	   3492	  16948	   4234	adm_c16.elf
+Finished building: default.size.stdout
+ 
+Finished building: adm_c16.bin
+ 
+Finished building: adm_c16.list
+ 
+22:39:28 **** Incremental Build of configuration Debug for project adm_c16 ****
+make -j8 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_func.d" -MT"Core/Src/asm_func.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_func.o" "../Core/Src/asm_func.S"
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'test':
-../Core/Src/main.c:182:20: warning: passing argument 1 of 'productoEscalar16' from incompatible pointer type [-Wincompatible-pointer-types]
-  182 |  productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
-      |                    ^~~~~~~~~~~
-      |                    |
-      |                    uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:139:41: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  139 | static void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                               ~~~~~~~~~~^~~~~~~~
-../Core/Src/main.c:182:32: warning: passing argument 2 of 'productoEscalar16' from incompatible pointer type [-Wincompatible-pointer-types]
-  182 |  productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
-      |                                ^~~~~~~~~~~~
-      |                                |
-      |                                uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:139:61: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  139 | static void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                                                   ~~~~~~~~~~^~~~~~~~~
-../Core/Src/main.c:184:20: warning: passing argument 1 of 'productoEscalar12' from incompatible pointer type [-Wincompatible-pointer-types]
-  184 |  productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-      |                    ^~~~~~~~~~~
-      |                    |
-      |                    uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:151:41: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  151 | static void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                               ~~~~~~~~~~^~~~~~~~
-../Core/Src/main.c:184:32: warning: passing argument 2 of 'productoEscalar12' from incompatible pointer type [-Wincompatible-pointer-types]
-  184 |  productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-      |                                ^~~~~~~~~~~~
-      |                                |
-      |                                uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:151:61: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  151 | static void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                                                   ~~~~~~~~~~^~~~~~~~~
+../Core/Src/main.c: In function 'test_1parte_asm':
+../Core/Src/main.c:221:24: warning: passing argument 1 of 'asm_productoEscalar16' from incompatible pointer type [-Wincompatible-pointer-types]
+  221 |  asm_productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
+      |                        ^~~~~~~~~~~
+      |                        |
+      |                        uint16_t * {aka short unsigned int *}
+In file included from ../Core/Src/main.c:25:
+../Core/Inc/asm_func.h:15:39: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'uint16_t *' {aka 'short unsigned int *'}
+   15 | void asm_productoEscalar16 (uint32_t* firstOperand, uint32_t* secondOperand, uint32_t d, uint32_t h);
+      |                             ~~~~~~~~~~^~~~~~~~~~~~
+../Core/Src/main.c:221:36: warning: passing argument 2 of 'asm_productoEscalar16' from incompatible pointer type [-Wincompatible-pointer-types]
+  221 |  asm_productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
+      |                                    ^~~~~~~~~~~~
+      |                                    |
+      |                                    uint16_t * {aka short unsigned int *}
+In file included from ../Core/Src/main.c:25:
+../Core/Inc/asm_func.h:15:63: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'uint16_t *' {aka 'short unsigned int *'}
+   15 | void asm_productoEscalar16 (uint32_t* firstOperand, uint32_t* secondOperand, uint32_t d, uint32_t h);
+      |                                                     ~~~~~~~~~~^~~~~~~~~~~~~
 ../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:226:18: warning: unused variable 'Resultado' [-Wunused-variable]
-  226 |   const uint32_t Resultado = asm_sum (5, 3);
+../Core/Src/main.c:262:18: warning: unused variable 'Resultado' [-Wunused-variable]
+  262 |   const uint32_t Resultado = asm_sum (5, 3);
       |                  ^~~~~~~~~
 arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: adm_c16.elf
@@ -106,59 +145,19 @@ arm-none-eabi-size   adm_c16.elf
 arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
 arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
    text	   data	    bss	    dec	    hex	filename
-  12956	     20	   3492	  16468	   4054	adm_c16.elf
+  13560	     20	   3492	  17072	   42b0	adm_c16.elf
 Finished building: default.size.stdout
  
 Finished building: adm_c16.bin
  
 Finished building: adm_c16.list
  
-18:07:28 **** Incremental Build of configuration Debug for project adm_c16 ****
-make -j8 all 
-arm-none-eabi-size   adm_c16.elf 
-   text	   data	    bss	    dec	    hex	filename
-  12956	     20	   3492	  16468	   4054	adm_c16.elf
-Finished building: default.size.stdout
- 
-18:08:53 **** Incremental Build of configuration Debug for project adm_c16 ****
+22:40:40 **** Incremental Build of configuration Debug for project adm_c16 ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'test':
-../Core/Src/main.c:182:20: warning: passing argument 1 of 'productoEscalar16' from incompatible pointer type [-Wincompatible-pointer-types]
-  182 |  productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
-      |                    ^~~~~~~~~~~
-      |                    |
-      |                    uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:139:41: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  139 | static void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                               ~~~~~~~~~~^~~~~~~~
-../Core/Src/main.c:182:32: warning: passing argument 2 of 'productoEscalar16' from incompatible pointer type [-Wincompatible-pointer-types]
-  182 |  productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
-      |                                ^~~~~~~~~~~~
-      |                                |
-      |                                uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:139:61: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  139 | static void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                                                   ~~~~~~~~~~^~~~~~~~~
-../Core/Src/main.c:184:20: warning: passing argument 1 of 'productoEscalar12' from incompatible pointer type [-Wincompatible-pointer-types]
-  184 |  productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-      |                    ^~~~~~~~~~~
-      |                    |
-      |                    uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:151:41: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  151 | static void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                               ~~~~~~~~~~^~~~~~~~
-../Core/Src/main.c:184:32: warning: passing argument 2 of 'productoEscalar12' from incompatible pointer type [-Wincompatible-pointer-types]
-  184 |  productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-      |                                ^~~~~~~~~~~~
-      |                                |
-      |                                uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:151:61: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  151 | static void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
-      |                                                   ~~~~~~~~~~^~~~~~~~~
 ../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:226:18: warning: unused variable 'Resultado' [-Wunused-variable]
-  226 |   const uint32_t Resultado = asm_sum (5, 3);
+../Core/Src/main.c:262:18: warning: unused variable 'Resultado' [-Wunused-variable]
+  262 |   const uint32_t Resultado = asm_sum (5, 3);
       |                  ^~~~~~~~~
 arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: adm_c16.elf
@@ -167,31 +166,17 @@ arm-none-eabi-size   adm_c16.elf
 arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
 arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
    text	   data	    bss	    dec	    hex	filename
-  13192	     20	   3492	  16704	   4140	adm_c16.elf
+  13560	     20	   3492	  17072	   42b0	adm_c16.elf
 Finished building: default.size.stdout
  
 Finished building: adm_c16.bin
  
 Finished building: adm_c16.list
  
-18:10:15 **** Incremental Build of configuration Debug for project adm_c16 ****
+22:40:53 **** Incremental Build of configuration Debug for project adm_c16 ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:226:18: warning: unused variable 'Resultado' [-Wunused-variable]
-  226 |   const uint32_t Resultado = asm_sum (5, 3);
-      |                  ^~~~~~~~~
-arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: adm_c16.elf
- 
 arm-none-eabi-size   adm_c16.elf 
-arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
-arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
    text	   data	    bss	    dec	    hex	filename
-  13184	     20	   3492	  16696	   4138	adm_c16.elf
+  13560	     20	   3492	  17072	   42b0	adm_c16.elf
 Finished building: default.size.stdout
- 
-Finished building: adm_c16.bin
- 
-Finished building: adm_c16.list
  

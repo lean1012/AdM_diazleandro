@@ -5,6 +5,10 @@
 @ Simbolos exportados
 .global asm_svc
 .global asm_sum
+.global asm_zeros32
+.global asm_zeros16
+.global asm_productoEscalar32
+.global asm_productoEscalar16
 
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -42,4 +46,97 @@
         @ mov pc,lr
         @ bx lr
         @ push {lr} ... pop {pc}
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@  void asm_zeros32(uint32_t *vector, uint32_t longitud);
+@
+@ Parámetros recibidos:
+@	r0: direccion del vector
+@	r1: longitud del vector
+
+.thumb_func
+    asm_zeros32:
+    mov r2, 0
+    mov r3, 0
+    loop_asm_zeros32:
+        str r2, [r0,r3]
+        add r3,4
+        subs r1, 1
+		bne loop_asm_zeros32
+	bx lr
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@  void asm_zeros16(uint32_t *vector, uint32_t longitud);
+@
+@ Parámetros recibidos:
+@	r0: direccion del vector
+@	r1: longitud del vector
+
+.thumb_func
+    asm_zeros16:
+    mov r2, 0
+    mov r3, 0
+    loop_asm_zeros16:
+        str r2, [r0,r3]
+        add r3,2
+        subs r1, 1
+		bne loop_asm_zeros16
+	bx lr
+
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@  void asm_productoEscalar32(uint32_t *vector, uint32_t longitud);
+@
+@ Parámetros recibidos:
+@	r0: dirección del vector de entrada
+@	r1: dirección del vector de salida
+@	r2: longitud
+@	r3: escalar
+
+.thumb_func
+    asm_productoEscalar32:
+    loop_asm_productoEscalar32:
+    	ldr r5, [r0]
+        mul r4, r5, r3
+        str r4, [r1]
+        add r0,4
+        add r1,4
+        subs r2, 1
+		bne loop_asm_productoEscalar32
+	bx lr
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@  void asm_productoEscalar16(uint32_t *vector, uint32_t longitud);
+@
+@ Parámetros recibidos:
+@	r0: dirección del vector de entrada
+@	r1: dirección del vector de salida
+@	r2: longitud
+@	r3: escalar
+
+.thumb_func
+    asm_productoEscalar16:
+    loop_asm_productoEscalar16:
+    	ldr r5, [r0]
+        mul r4, r5, r3
+        str r4, [r1]
+        add r0,2
+        add r1,2
+        subs r2, 1
+		bne loop_asm_productoEscalar16
+	bx lr
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 

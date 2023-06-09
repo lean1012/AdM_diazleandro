@@ -161,7 +161,7 @@ static void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
 }
 
 
-static void test(){
+void test_1parte_c(){
 
 	uint32_t vector32_in[10];
 	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
@@ -187,6 +187,40 @@ static void test(){
 
 }
 
+void test_1parte_asm(){
+	uint32_t vector32_in[10];
+
+	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
+		vector32_in[i]=i;
+	}
+
+	asm_zeros32(vector32_in,sizeof(vector32_in)/sizeof(vector32_in[0]));
+
+	uint16_t vector16_in[10];
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=2*i;
+	}
+
+	asm_zeros16(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]));
+
+	uint32_t vector32_out[10];
+
+	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
+			vector32_in[i]=i;
+		}
+
+	for(uint32_t i=0;i<sizeof(vector32_out)/sizeof(vector32_out[0]);i++){
+			vector32_out[i]=i;
+	}
+
+	asm_productoEscalar32(vector32_in,vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]),10);
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=2*i;
+	}
+	uint16_t vector16_out[10];
+	asm_productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -196,7 +230,9 @@ static void test(){
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	test();
+	test_1parte_c();
+	test_1parte_asm();
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
