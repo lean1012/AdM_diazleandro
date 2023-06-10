@@ -1,10 +1,37 @@
-22:40:53 **** Incremental Build of configuration Debug for project adm_c16 ****
+02:00:56 **** Incremental Build of configuration Debug for project adm_c16 ****
 make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'test_1parte_c':
+../Core/Src/main.c:246:26: warning: pointer targets in passing argument 1 of 'asm_max' differ in signedness [-Wpointer-sign]
+  246 |  int32_t hola = asm_max (vector32_in, sizeof(vector32_in)/sizeof(vector32_in[0]));
+      |                          ^~~~~~~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+In file included from ../Core/Src/main.c:25:
+../Core/Inc/asm_func.h:21:28: note: expected 'int32_t *' {aka 'long int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+   21 | int32_t asm_max (int32_t * vectorIn, uint32_t longitud);
+      |                  ~~~~~~~~~~^~~~~~~~
+../Core/Src/main.c:246:10: warning: unused variable 'hola' [-Wunused-variable]
+  246 |  int32_t hola = asm_max (vector32_in, sizeof(vector32_in)/sizeof(vector32_in[0]));
+      |          ^~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:346:18: warning: unused variable 'Resultado' [-Wunused-variable]
+  346 |   const uint32_t Resultado = asm_sum (5, 3);
+      |                  ^~~~~~~~~
+arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: adm_c16.elf
+ 
 arm-none-eabi-size   adm_c16.elf 
+arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
+arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
    text	   data	    bss	    dec	    hex	filename
-  13560	     20	   3492	  17072	   42b0	adm_c16.elf
+  13256	     20	   3492	  16768	   4180	adm_c16.elf
 Finished building: default.size.stdout
  
+Finished building: adm_c16.bin
+ 
+Finished building: adm_c16.list
+ 
 
-22:40:54 Build Finished. 0 errors, 0 warnings. (took 170ms)
+02:00:57 Build Finished. 0 errors, 3 warnings. (took 1s.41ms)
 

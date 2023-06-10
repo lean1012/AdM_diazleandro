@@ -9,6 +9,9 @@
 .global asm_zeros16
 .global asm_productoEscalar32
 .global asm_productoEscalar16
+.global asm_filtroVentana
+.global asm_pack32to16
+.global asm_max
 
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -127,16 +130,129 @@
 
 .thumb_func
     asm_productoEscalar16:
+    push {R4-R5}
     loop_asm_productoEscalar16:
-    	ldr r5, [r0]
+    	ldrh r5, [r0]
         mul r4, r5, r3
-        str r4, [r1]
+        strh r4, [r1]
         add r0,2
         add r1,2
         subs r2, 1
 		bne loop_asm_productoEscalar16
+	pop {R4-R9}
 	bx lr
 
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@  void asm_productoEscalar16(uint32_t *vector, uint32_t longitud);
+@
+@ Parámetros recibidos:
+@	r0: dirección del vector de entrada
+@	r1: dirección del vector de salida
+@	r2: longitud del vector de entrada
+
+.thumb_func
+    asm_filtroVentana:
+    	push {R4-R9}
+    	mov r9, r0 //guardo el inicio
+    	mov r10, r2
+    	lsl r10,1 //multiplico por 2
+    	sub r10, 2
+			loop_asm_filtroVentana:
+			mov r5, 10 //iterador de ventana
+			mov r6, r0 //puntero
+			add r6 , r6, r5 // empiezo del numero más alto de la ventana +2
+			mov r8, 0 //acumulador
+			loop_item:
+			sub r6,2
+			//resto 1 y me fijo si termine de iterar
+			subs r5, 1
+			beq Fin
+			//Me fijo primero si no soy menor al primer elemento
+			cmp r6,r9
+			bmi loop_item //si es menor me voy a loop item
+			//Me fijo si no soy mayor al último elemento
+
+			add r9, r10
+			cmp r9,r6
+			sub r9, r10
+			bmi loop_item //si es menor me voy a loop item
+			//busco el valor en memoria y lo sumo al acumulador
+			ldrh r7, [r6]
+			add r8, r8, r7
+			b loop_item
+			Fin:
+			strh r8,[r1]
+			add r0,2
+			add r1,2
+			subs r2, 1
+			bne loop_asm_filtroVentana
+		pop {R4-R9}
+		bx lr
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@   void asm_pack32to16 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn)
+@
+@ Parametros recibidos:
+@   r0: vector de entrada
+@   r1: vector de salida
+@	r2: largo del vector
+@
+@
+.thumb_func
+    asm_pack32to16:
+        loop_asm_pack32to16:
+        ldr r3, [r0]
+        lsr r3, 16
+        strh r3, [r1]
+        add r0,4
+        add r1,2
+        subs r2, 1
+			bne loop_asm_pack32to16
+		bx lr
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@   int32_t asm_max (int32_t * vectorIn, uint32_t longitud);
+@
+@ Parametros recibidos:
+@   r0: vector de entrada
+@   r1: longitud
+@
+@ Valor de retorno:
+@   r0: resultado de la posición de valor máximo en el arreglo
+@
+.thumb_func
+    asm_max:
+    	push {R4-R5}
+    	ldr r2, [r0] //guardo el valor maximo
+    	mov r4, 0 //guardo la posicion
+    	mov r5, r1
+        loop_asm_max:
+        ldr r3, [r0]
+        cmp r3,r2
+		bmi Fin_1 //si es menor me voy a Fin
+        mov r4, r1 //guardo poscicion
+		mov r2, r3 //guardo valor maximo
+		Fin_1:
+        add r0,4
+        subs r1, 1
+			bne loop_asm_max
+		sub r5, r4
+		mov r0, r5
+		pop {R4-R5}
+		bx lr
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 

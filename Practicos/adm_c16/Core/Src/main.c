@@ -122,13 +122,13 @@ static void PrivilegiosSVC (void)
 }
 
 
-static void zeros(uint32_t *vector, uint32_t longitud) {
+void zeros(uint32_t *vector, uint32_t longitud) {
 
 	for (uint32_t i = 0; i < longitud; i++) {
 		vector[i] = 0;
 	}
 }
-static void productoEscalar32(uint32_t *vectorIn, uint32_t *vectorOut,
+void productoEscalar32(uint32_t *vectorIn, uint32_t *vectorOut,
 		uint32_t longitud, uint32_t escalar) {
 
 	for (uint32_t i = 0; i < longitud; i++) {
@@ -136,7 +136,7 @@ static void productoEscalar32(uint32_t *vectorIn, uint32_t *vectorOut,
 	}
 
 }
-static void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
+void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
 		uint16_t longitud, uint16_t escalar) {
 
 	for (uint16_t i = 0; i < longitud; i++) {
@@ -148,7 +148,7 @@ static void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
 //El mayor número en 12 bits es 4095, el siguiente es ya de 13bits
 
 #define BIT12 12
-static void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
+void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
 		uint32_t longitud, uint16_t escalar) {
 
 	for (uint16_t i = 0; i < longitud; i++) {
@@ -160,9 +160,47 @@ static void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
 
 }
 
+void filtroVentana10(uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn){
+
+	for(uint32_t i=0; i<longitudVectorIn; i++){
+		uint32_t acumulador = 0;
+
+		for(int32_t j=-4;j<5;j++){
+			if( (i+j>=0) && (i+j<longitudVectorIn)){
+				acumulador = acumulador + vectorIn[i+j];
+			}
+		}
+
+		vectorOut[i]=acumulador;
+
+	}
+}
+
+void pack32to16 (uint32_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn){
+
+	for(uint32_t i=0; i<longitudVectorIn; i++){
+		vectorOut[i] = vectorIn[i]>>16;
+	}
+}
+
+int32_t max (int32_t * vectorIn, uint32_t longitud){
+
+	int32_t max_value = vectorIn[0];
+	int32_t pos = 0;
+	for(uint32_t i=0; i<longitud; i++){
+
+		if(vectorIn[i]>max_value){
+			max_value=vectorIn[i];
+			pos = i;
+		}
+	}
+
+	return pos;
+}
 
 void test_1parte_c(){
 
+	/*
 	uint32_t vector32_in[10];
 	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
 		vector32_in[i]=i;
@@ -182,12 +220,35 @@ void test_1parte_c(){
 	productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
 
 	productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
+*/
+
+	uint16_t vector16_in[20];
+
+	uint16_t vector16_out[20];
+
+	uint32_t vector32_in[20];
 
 
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=1;
+	}
+
+
+	filtroVentana10 (vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]));
+
+	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
+		vector32_in[i]=1;
+	}
+	vector32_in[18]=10;
+	//pack32to16(vector32_in, vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
+
+
+	int32_t hola = asm_max (vector32_in, sizeof(vector32_in)/sizeof(vector32_in[0]));
 
 }
 
 void test_1parte_asm(){
+/*
 	uint32_t vector32_in[10];
 
 	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
@@ -214,11 +275,34 @@ void test_1parte_asm(){
 	}
 
 	asm_productoEscalar32(vector32_in,vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]),10);
+
 	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-		vector16_in[i]=2*i;
+		vector16_in[i]=1;
 	}
-	uint16_t vector16_out[10];
-	asm_productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
+	*/
+
+	uint16_t vector16_in[20];
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=1;
+	}
+
+	uint16_t vector16_out[20];
+	//asm_productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
+
+	//asm_filtroVentana (vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]));
+
+	uint32_t vector32_in[20];
+
+	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
+		vector32_in[i]=0x80000000;
+	}
+
+	asm_pack32to16(vector32_in, vector16_out, sizeof(vector16_in)/sizeof(vector16_in[0]));
+
+
+
+
+
 }
 
 /* USER CODE END 0 */

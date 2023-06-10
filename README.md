@@ -44,6 +44,14 @@ El mapa de memoria del cortex es un mapa de 4GB continuo de direcciones donde se
 
 Los registros ortogonales son los que al modificar uno, no afectamos el comportamiento de otro registro.
 
+8. ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
+
+
+
+10. Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?
+
+La pila tiene como prinicipales funciones pasar datos a funciones o subrutinas, guardar variables locales, guardar el estado del procesador, por ejemplo cuando se atiende una interrupción o se salta a una subrutina. 
+
 14. ¿Qué es el CMSIS? ¿Qué función cumple? ¿Quién lo provee? ¿Qué ventajas aporta?
 
 El CMSIS es una librería provista por ARM que permiten usar funcionalidades estandar de Cortex, esto hace que a la hora de programar utilizando CMSIS es que es muy facil portar el programa a otro Cortex.
@@ -51,3 +59,21 @@ El CMSIS es una librería provista por ARM que permiten usar funcionalidades est
 18. ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
 
 El Systick es el periferico que se utiliza en los sistemas operativos para llevar una base de tiempo.
+
+
+ISA
+
+1. ¿Qué son los sufijos y para qué se los utiliza? Dé un ejemplo
+
+Los sufijos nos permiten agregar funcionalidad a las instrucciónes. Existen sufijos que nos permiten operar con 8 y 16 bits. Ejemplo: ldrh esta instrucción cargar en un registro 16bits del contenido de una memoria. Si no se le pone sufijo está implicito que se trabaja con 32bits.
+
+
+2. ¿Para qué se utiliza el sufijo ‘s’? Dé un ejemplo
+
+El sufijo s es para indicar que se modifiquen las banderas al realizar una operación aritmética. En caso que no se agrege, la operación no afectaran las flags, excepto la instrucción de cmp.
+
+4. Describa brevemente la interfaz entre assembler y C ¿Cómo se reciben los argumentos de las funciones? ¿Cómo se devuelve el resultado? ¿Qué registros deben guardarse en la pila antes de ser modificados?
+
+Cuando se llama a una función en asembler el compilador salva los registros r0 al r3 y pasa los parámetros en dichos regitros. Si tiene datos para devolver se guarda en el registro r0. Al salir de la función los registros r0 al r3 recuperan su estado. Si se desea utilizar otros registros se deben preservar.
+
+
