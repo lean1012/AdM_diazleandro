@@ -156,7 +156,7 @@
 
 .thumb_func
     asm_filtroVentana:
-    	push {R4-R9}
+    	push {R4-R10}
     	mov r9, r0 //guardo el inicio
     	mov r10, r2
     	lsl r10,1 //multiplico por 2
@@ -190,7 +190,7 @@
 			add r1,2
 			subs r2, 1
 			bne loop_asm_filtroVentana
-		pop {R4-R9}
+		pop {R4-R10}
 		bx lr
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
