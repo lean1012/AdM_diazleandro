@@ -198,6 +198,37 @@ int32_t max (int32_t * vectorIn, uint32_t longitud){
 	return pos;
 }
 
+void downsampleM(int32_t* vectorIn, int32_t* vectorOut, uint32_t longitud, uint32_t N){
+
+	uint32_t aux = 0;
+	uint32_t cantidad =0;
+	for(uint32_t i=0; i<longitud; i++){
+		if(aux == N-1){
+			aux =0;
+			cantidad++;
+		}else{
+			vectorOut[i-cantidad] = vectorIn[i];
+			aux++;
+		}
+	}
+}
+
+void invertir (uint16_t * vector, uint32_t longitud){
+
+
+	for(uint32_t i=0; i<longitud/2; i++){
+		uint32_t aux = vector[i];
+		vector[i] = vector[longitud-1-i];
+		vector[longitud-1-i] = aux;
+	}
+
+}
+
+
+uint32_t vector32_in[15];
+	uint32_t vector32_out[15];
+	uint16_t vector16_in[15];
+
 void test_1parte_c(){
 
 	/*
@@ -222,11 +253,7 @@ void test_1parte_c(){
 	productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
 */
 
-	uint16_t vector16_in[20];
 
-	uint16_t vector16_out[20];
-
-	uint32_t vector32_in[20];
 
 
 	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
@@ -234,7 +261,7 @@ void test_1parte_c(){
 	}
 
 
-	filtroVentana10 (vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]));
+	//filtroVentana10 (vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]));
 
 	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
 		vector32_in[i]=1;
@@ -246,6 +273,9 @@ void test_1parte_c(){
 	int32_t hola = asm_max (vector32_in, sizeof(vector32_in)/sizeof(vector32_in[0]));
 
 }
+
+
+
 
 void test_1parte_asm(){
 /*
@@ -281,6 +311,7 @@ void test_1parte_asm(){
 	}
 	*/
 
+	/*
 	uint16_t vector16_in[20];
 	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
 		vector16_in[i]=1;
@@ -298,6 +329,36 @@ void test_1parte_asm(){
 	}
 
 	asm_pack32to16(vector32_in, vector16_out, sizeof(vector16_in)/sizeof(vector16_in[0]));
+	*/
+
+
+
+
+		for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
+			vector32_in[i]=i+1;
+		}
+
+		for(uint32_t i=0;i<sizeof(vector32_out)/sizeof(vector32_out[0]);i++){
+					vector32_out[i]=0;
+				}
+
+	downsampleM(vector32_in, vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]),5);
+
+	for(uint32_t i=0;i<sizeof(vector32_out)/sizeof(vector32_out[0]);i++){
+						vector32_out[i]=0;
+					}
+
+	asm_downsampleM(vector32_in, vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]),5);
+
+
+		for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+			vector16_in[i]=i;
+		}
+	// invertir (vector16_in, sizeof(vector16_in)/sizeof(vector16_in[0]));
+
+	 //asm_invertir (vector16_in, sizeof(vector16_in)/sizeof(vector16_in[0]));
+
+
 
 
 

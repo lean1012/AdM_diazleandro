@@ -12,6 +12,9 @@
 .global asm_filtroVentana
 .global asm_pack32to16
 .global asm_max
+.global asm_downsampleM
+.global asm_invertir
+
 
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -250,6 +253,76 @@
 		sub r5, r4
 		mov r0, r5
 		pop {R4-R5}
+		bx lr
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@   int32_t asm_downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N);
+@
+@ Parametros recibidos:
+@   r0: vector de entrada
+@   r1: vector de salida
+@	r2: longitud del vector
+@	r3: N número a decimar cada N muestras
+@
+.thumb_func
+    asm_downsampleM:
+    	push {r4,r5}
+    	mov r4, 0 //uso como contador
+    	mov r5, 0
+    	sub r3,1
+    	loop_asm_downsampleM:
+		cmp r3,r4
+		add r4,1
+		bne asm_downsampleM_fin
+
+		mov r4,0
+		b asm_downsampleM_fin2
+
+		asm_downsampleM_fin:
+		ldr r5, [r0]
+		str r5, [r1]
+
+		add r1,4
+		asm_downsampleM_fin2:
+		add r0,4
+        subs r2, 1
+			bne loop_asm_downsampleM
+		pop {r4,r5}
+		bx lr
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@   int32_t asm_invertir (uint16_t * vector, uint32_t longitud);
+@
+@ Parametros recibidos:
+@   r0: vector de entrada y salida
+@   r1: longitud
+@
+@
+.thumb_func
+    asm_invertir:
+    	push {r4}
+    	mov r2, r0
+    	add r2, r2,r1,LSL 1
+    	sub r2, 2
+		lsr r1,1 //divido por 2,
+    	loop_asm_invertir:
+    	ldrh r3, [r0]
+    	ldrh r4, [r2]
+    	strh r4, [r0]
+    	strh r3, [r2]
+		add r0,2
+        sub r2, 2
+        subs r1, 1
+			bne loop_asm_invertir
+		pop {R4}
 		bx lr
 
 
