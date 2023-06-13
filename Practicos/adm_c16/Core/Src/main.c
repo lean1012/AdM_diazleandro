@@ -228,6 +228,8 @@ void invertir (uint16_t * vector, uint32_t longitud){
 uint32_t vector32_in[15];
 	uint32_t vector32_out[15];
 	uint16_t vector16_in[15];
+	uint16_t vector16_out[15];
+
 
 void test_1parte_c(){
 
@@ -278,7 +280,34 @@ void test_1parte_c(){
 
 
 void test_1parte_asm(){
-/*
+
+
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=1;
+		}
+
+	for(uint32_t i=0;i<sizeof(vector16_out)/sizeof(vector16_out[0]);i++){
+		vector16_out[i]=0;
+			}
+
+
+	productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
+
+	for(uint32_t i=0;i<sizeof(vector16_out)/sizeof(vector16_out[0]);i++){
+			vector16_out[i]=0;
+				}
+
+
+	asm_productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
+
+
+	for(uint32_t i=0;i<sizeof(vector16_out)/sizeof(vector16_out[0]);i++){
+				vector16_out[i]=0;
+					}
+
+	asm_productoEscalar12_instrucciones_sat (vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
+	/*
+
 	uint32_t vector32_in[10];
 
 	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
@@ -333,7 +362,7 @@ void test_1parte_asm(){
 
 
 
-
+/*
 		for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
 			vector32_in[i]=i+1;
 		}
@@ -358,7 +387,7 @@ void test_1parte_asm(){
 
 	 //asm_invertir (vector16_in, sizeof(vector16_in)/sizeof(vector16_in[0]));
 
-
+*/
 
 
 
