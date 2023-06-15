@@ -26,11 +26,9 @@ Explique
 
 Los procesadores más recientes traen un conjunto de instrucciones adicional llamado Thumb, de 16 bits de longitud en lugar de 32 bits. Esto hace que al tener la mitad de longitud, más instrucciones entran en una misma cantidad de memoria que instrucciones de 32 bits.
 
-3. ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este
-tipo de arquitectura?
+3. ¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este tipo de arquitectura?
 
-Arquitecturas Load-Store solamente procesará (suma, resta, etc) valores que estén en sus registros o que esten especificados en la instrucción y siempre se obtendrá el resultado en un registro. Este tipo de arquitecturas no tienen instrucciones que realicen operaciones de memoria a memoria. Las únicas operaciones que se aplican a la memoria son aquellas
-que copian datos de la memoria en los registros o de registros a memoria.
+Arquitecturas Load-Store solamente procesará (suma, resta, etc) valores que estén en sus registros o que esten especificados en la instrucción y siempre se obtendrá el resultado en un registro. Este tipo de arquitecturas no tienen instrucciones que realicen operaciones de memoria a memoria. Las únicas operaciones que se aplican a la memoria son aquellas que copian datos de la memoria en los registros o de registros a memoria.
 
 4. ¿Cómo es el mapa de memoria de la familia?
 
@@ -38,7 +36,14 @@ El mapa de memoria del cortex es un mapa de 4GB continuo de direcciones donde se
 
 5. ¿Qué ventajas presenta el uso de los “shadowed pointers” del PSP y el MSP?
 
+El MSP es el puntero de stack por defecto, Main Stack Pointer. Este se usa en el modo Thread y siempre se usa en el modo Handler. En cambio el PSP, Processor Stack Pointer, es usado por las tareas cuando se ejecutan en modo no privilegiado. En general se va a utilizar el MSP si se tiene un programa sencillo sin nigun sistema de operativo.
+
 6. Describa los diferentes modos de privilegio y operación del Cortex M, sus relaciones y como se conmuta de uno al otro. Describa un ejemplo en el que se pasa del modo privilegiado a no priviligiado y nuevamente a privilegiado.
+
+Los procesadores Cortex-M soportan la ejecución de código en modo privilegiado y modo usuario (No privilegiado). El modo privilegiado asegura un acceso a todos los recursos del sistema. El modo usuario tiene restricciones en el acceso de algunos recursos.
+El Cortex M soporta dos modos de operación, el Thread y Handler.  El modo Thread tiene la posibilidad de ser ejecutado en modo privilegiado o no, además permite decidir si se usa el MSP o PSP. En cambio, el modo Handler siempre es ejecutado es modo privilegiado, usa el MSP y se entra cuando ocurre una excepción o una interrupción en el microcontrolador.
+
+Estando en modo no priviligado no podemos ir a modo priviligado, en cambio estando en modo priviligado podemos ir a no priviligado. Entonces para ir a priviligado estando en no priviligado hay que generar una excepción para ir a handler modo. En este momento tenemos permiso de acceder a los registros de control y modificar el modo. 
 
 7. ¿Qué se entiende por modelo de registros ortogonal? Dé un ejemplo
 
@@ -47,6 +52,8 @@ Los registros ortogonales son los que al modificar uno, no afectamos el comporta
 8. ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
 
 9. Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
+
+La excepción de reset es la que se produce cuando ocurre un reset. La excepción de NMI es una excepción producida por una interrupcion no enmascarable y la excepcion Hardfault es cuándo ocurre una falla. Estas tienen diferenes prioridades, reset es la de mayor prioridad (-3), luego le sigue NMI (-2) y por último Hardfault (-1). Menor número mayor prioridad.
 
 10. Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?
 
@@ -59,6 +66,8 @@ Cuando se realiza el reset, el PC se incializa con la dirección 0x0, la primera
 
 
 12. ¿Qué entiende por “core peripherals”? ¿Qué diferencia existe entre estos y el resto de los periféricos?
+
+Los "core-peripherals" son los que están en el procesador diseñado por ARM. Estos son el contradolor de interrupción NVIC, SysTick Timer y la MPU. El resto de los periféricos los va a poner los distintos fabricantes.
 
 13. ¿Cómo se implementan las prioridades de las interrupciones? Dé un ejemplo
 
@@ -83,6 +92,7 @@ La función de la MPU es proteger sectores de memoria para que estos no puedan s
 
 19. ¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las regiones definidas?
 
+La MPU puede gestionar hasta 8 regiones de memoria. Cuando ocurre solapamiento 
 
 20. ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto de las excepciones? Dé un ejemplo
 

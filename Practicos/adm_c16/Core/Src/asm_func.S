@@ -440,7 +440,6 @@
 .thumb_func
     asm_eco_simd:
     	push {r4-r9}
-
     	mov r4, 0
     	mov r6, 0
     	mul r4, r2, r3  //samples*eco_start
