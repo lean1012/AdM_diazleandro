@@ -16,6 +16,8 @@
 .global asm_max
 .global asm_downsampleM
 .global asm_invertir
+.global asm_eco
+.global asm_eco_simd
 
 
 
@@ -384,6 +386,80 @@
         subs r1, 1
 			bne loop_asm_invertir
 		pop {R4}
+		bx lr
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@   int32_t asm_eco (int16_t * vector, uint32_t longitud, uint32_t samples, uint32_t eco_start);
+@
+@ Parametros recibidos:
+@   r0: vector de entrada y salida
+@   r1: longitud
+@	r2: frecuencia de sampleo
+@	r3:	donde se empieza a generar el eco
+@
+.thumb_func
+    asm_eco:
+    	push {r4-r8}
+
+    	mov r4, 0
+    	mov r6, 0
+    	mul r4, r2, r3  //samples*eco_start
+    	mov r5, 1000
+    	sdiv r4,r4, r5
+		sub r1, r4
+    	add r6, r0, r4,LSL 1
+    	loop_asm_eco:
+    	ldrh r7, [r0]
+    	ldrh r8, [r6]
+		add r7, r8, r7, ASR 1
+		strh r7, [r6]
+		add r6, 2
+    	add r0,2
+        subs r1, 1
+			bne loop_asm_eco
+		pop {r4-r8}
+		bx lr
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Prototipo en "C":
+@   int32_t asm_eco_simd (int16_t * vector, uint32_t longitud, uint32_t samples, uint32_t eco_start);
+@
+@ Parametros recibidos:
+@   r0: vector de entrada y salida
+@   r1: longitud
+@	r2: frecuencia de sampleo
+@	r3:	donde se empieza a generar el eco
+@
+.thumb_func
+    asm_eco_simd:
+    	push {r4-r9}
+
+    	mov r4, 0
+    	mov r6, 0
+    	mul r4, r2, r3  //samples*eco_start
+    	mov r5, 1000
+    	sdiv r4,r4, r5
+		sub r1, r4
+    	add r6, r0, r4,LSL 1
+    	loop_asm_eco_simd:
+    	ldr r7, [r0]
+    	ldr r8, [r6]
+    	mov r9, 0
+		shadd16 r7, r7, r9
+		sadd16 r7, r8, r7
+		str r7, [r6]
+		add r6, 4
+    	add r0,4
+        subs r1, 1
+			bne loop_asm_eco_simd
+		pop {r4-r9}
 		bx lr
 
 

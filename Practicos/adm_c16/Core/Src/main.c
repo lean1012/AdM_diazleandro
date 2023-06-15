@@ -224,10 +224,19 @@ void invertir (uint16_t * vector, uint32_t longitud){
 
 }
 
+void eco(int16_t * vector, uint32_t longitud, uint32_t samples, uint32_t eco_start){
 
-uint32_t vector32_in[15];
+	uint32_t start = samples*eco_start/1000;
+	for(uint32_t i = start; i<longitud; i++){
+		vector[i]=vector[i]+vector[i-882]/2;
+	}
+
+
+}
+
+uint32_t vector32_in[4096];
 	uint32_t vector32_out[15];
-	uint16_t vector16_in[15];
+	uint16_t vector16_in[4096];
 	uint16_t vector16_out[15];
 
 
@@ -257,7 +266,7 @@ void test_1parte_c(){
 
 
 
-
+/*
 	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
 		vector16_in[i]=1;
 	}
@@ -273,6 +282,27 @@ void test_1parte_c(){
 
 
 	int32_t hola = asm_max (vector32_in, sizeof(vector32_in)/sizeof(vector32_in[0]));
+	*/
+
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=i;
+		}
+
+	eco(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]), 44100, 20);
+
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=i;
+			}
+
+	asm_eco(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]), 44100, 20);
+
+
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+			vector16_in[i]=i;
+				}
+
+		asm_eco_simd(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]), 44100, 20);
+
 
 }
 
