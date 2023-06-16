@@ -51,18 +51,36 @@ Los registros ortogonales son los que al modificar uno, no afectamos el comporta
 
 8. ¿Qué ventajas presenta el uso de intrucciones de ejecución condicional (IT)? Dé un ejemplo
 
+La instrucción IT permite ejecutar un bloque de instrucciones condicionales, con el fin de reducir los saltos. Se puede colocar hasta 4 sentencias. La estructura IT es como “IF-Then-(Else)” y la sintaxis es con dos letras T y E:
+
+IT se refiere a If-Then (la siguiente instrucción es condicional)
+ITT se refiere a If-Then-Then (las siguientes 2 instrucciones son condicionales)
+ITE se refiere a If-Then-Else (las siguientes 2 instrucciones son condicionales)
+ITTE se refiere a If-Then-Then-Else (las siguientes 3 instrucciones son condicionales)
+ITTEE se refiere a If-Then-Then-Else-Else (las siguientes 4 instrucciones son condicionales)
+
+Ejemplo:
+
+cmp r0, 10      
+    ite eq           @ if R0 is equal 10...
+    addeq r1, 2     @ ... then R1 = R1 + 2
+    addne r1, 3     @ ... else R1 = R1 + 3
+
+Si r0 es igual a o mayor a 10, realizará el "then" addeq r1 #2, en cambio si r0 es menor a 10 se ejecutará el "else" addne r1, #3.
+
+
 9. Describa brevemente las excepciones más prioritarias (reset, NMI, Hardfault).
 
 La excepción de reset es la que se produce cuando ocurre un reset. La excepción de NMI es una excepción producida por una interrupcion no enmascarable y la excepcion Hardfault es cuándo ocurre una falla. Estas tienen diferenes prioridades, reset es la de mayor prioridad (-3), luego le sigue NMI (-2) y por último Hardfault (-1). Menor número mayor prioridad.
 
 10. Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno?
 
-La pila tiene como prinicipales funciones pasar datos a funciones o subrutinas, guardar variables locales, guardar el estado del procesador, por ejemplo cuando se atiende una interrupción o se salta a una subrutina. 
+La pila tiene como prinicipales funciones pasar datos a funciones o subrutinas, guardar variables locales, guardar el estado del procesador, por ejemplo cuando se atiende una interrupción o se salta a una subrutina, el micro debe guardar su estado. 
+Cuando es llamada una subrutina el PC se guarda en el registro LR (link register) para luego poder retornar a donde estaba (quedará apuntando a la siguiente instrucción). Al final de la subrutina hay que saltar, esto lo podemos hacer con bx lr. Saltamos al lr, que es donde está el PC guardado. En caso de llamar una subrutina dentro de otra hay que guardar en stack el valor de lr, para que no sea sobreescrito.
 
 11. Describa la secuencia de reset del microprocesador.
 
 Cuando se realiza el reset, el PC se incializa con la dirección 0x0, la primera línea de código, en la dirección 0x00000000 contiene el valor del SP (ejemplo 0x20008000), (MSB= 0x20008000). Luego la siguiente posición de memoria (0x000000004) está la dirección de memoria de la rutina que atiende el reset, el PC toma ese valor y el programa salta a ese valor. En esta rutina estará la inicialización del microntrolador. Luego finalmente está la ubicación del programa principal, el main, se salta a ese valor y el microncontroaldor sigue con nuestro programa.
-
 
 
 12. ¿Qué entiende por “core peripherals”? ¿Qué diferencia existe entre estos y el resto de los periféricos?
@@ -87,12 +105,12 @@ El Systick es el periferico que se utiliza en los sistemas operativos para lleva
 
 18. ¿Qué funciones cumple la unidad de protección de memoria (MPU)?
 
-La función de la MPU es proteger sectores de memoria para que estos no puedan ser escritos o leídos por otros procesos. Esto se usa en los RTOS para que las tareas no accedan a memoria de otras tareas.
+La función de la MPU es proteger sectores de memoria para que estos no puedan ser escritos o leídos por otros procesos. Esto se usa fundamentalmente en los RTOS para que las tareas no accedan a memoria de otras tareas.
 
 
 19. ¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las regiones definidas?
 
-La MPU puede gestionar hasta 8 regiones de memoria. Cuando ocurre solapamiento 
+La MPU puede gestionar hasta 8 regiones de memoria a las cuales se les pueden asignar permisos a cada una de ellas. Las zonas de memoria no cubiertas quedan sin protección y se pueden acceder sin restricciones. Cuando ocurre solapamiento entre las regiones la prioridad viene dada por su orden, es decir, aquella con la numeración más alta.  
 
 20. ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto de las excepciones? Dé un ejemplo
 
