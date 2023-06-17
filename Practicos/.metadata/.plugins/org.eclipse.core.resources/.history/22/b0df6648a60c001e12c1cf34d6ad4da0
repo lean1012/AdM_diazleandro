@@ -274,12 +274,12 @@
 .thumb_func
     asm_pack32to16:
         loop_asm_pack32to16:
-	        ldr r3, [r0]
-	        lsr r3, 16
-	        strh r3, [r1]
-	        add r0,4
-	        add r1,2
-	        subs r2, 1
+        ldr r3, [r0]
+        lsr r3, 16
+        strh r3, [r1]
+        add r0,4
+        add r1,2
+        subs r2, 1
 			bne loop_asm_pack32to16
 		bx lr
 
@@ -304,14 +304,14 @@
     	mov r4, 0 //guardo la posicion
     	mov r5, r1
         loop_asm_max:
-	        ldr r3, [r0]
-	        cmp r3,r2
-			bmi Fin_1 //si es menor me voy a Fin
-	        mov r4, r1 //guardo poscicion
-			mov r2, r3 //guardo valor maximo
-			Fin_1:
-	        add r0,4
-	        subs r1, 1
+        ldr r3, [r0]
+        cmp r3,r2
+		bmi Fin_1 //si es menor me voy a Fin
+        mov r4, r1 //guardo poscicion
+		mov r2, r3 //guardo valor maximo
+		Fin_1:
+        add r0,4
+        subs r1, 1
 			bne loop_asm_max
 		sub r5, r4
 		mov r0, r5
