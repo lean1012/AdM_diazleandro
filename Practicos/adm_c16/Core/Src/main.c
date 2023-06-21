@@ -122,12 +122,15 @@ static void PrivilegiosSVC (void)
 }
 
 
+// Ejercicio 1 en C - Inicializa vector en 0
 void zeros(uint32_t *vector, uint32_t longitud) {
 
 	for (uint32_t i = 0; i < longitud; i++) {
 		vector[i] = 0;
 	}
 }
+
+// Ejercicio 2 en C - Producto escalar 32 bits
 void productoEscalar32(uint32_t *vectorIn, uint32_t *vectorOut,
 		uint32_t longitud, uint32_t escalar) {
 
@@ -136,6 +139,8 @@ void productoEscalar32(uint32_t *vectorIn, uint32_t *vectorOut,
 	}
 
 }
+
+// Ejercicio 3 en C - Producto escalar 16 bits
 void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
 		uint16_t longitud, uint16_t escalar) {
 
@@ -145,8 +150,8 @@ void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut,
 
 }
 
+// Ejercicio 4 en C - Producto escalar 12 bits
 //El mayor número en 12 bits es 4095, el siguiente es ya de 13bits
-
 #define BIT12 12
 void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
 		uint32_t longitud, uint16_t escalar) {
@@ -157,9 +162,10 @@ void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut,
 			vectorOut[i] = (1<<BIT12)-1;
 		}
 	}
-
 }
 
+// Ejercicio 5 en C - Producto ventana, valores fuera de la ventana
+// son tomados como 0.
 void filtroVentana10(uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn){
 
 	for(uint32_t i=0; i<longitudVectorIn; i++){
@@ -170,12 +176,11 @@ void filtroVentana10(uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitu
 				acumulador = acumulador + vectorIn[i+j];
 			}
 		}
-
 		vectorOut[i]=acumulador;
-
 	}
 }
 
+// Ejercicio 6 en C - conversión 32bits a 16bits
 void pack32to16 (uint32_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn){
 
 	for(uint32_t i=0; i<longitudVectorIn; i++){
@@ -183,21 +188,21 @@ void pack32to16 (uint32_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVec
 	}
 }
 
+// Ejercicio 7 en C - Posición del máximo
 int32_t max (int32_t * vectorIn, uint32_t longitud){
 
 	int32_t max_value = vectorIn[0];
 	int32_t pos = 0;
 	for(uint32_t i=0; i<longitud; i++){
-
 		if(vectorIn[i]>max_value){
 			max_value=vectorIn[i];
 			pos = i;
 		}
 	}
-
 	return pos;
 }
 
+// Ejercicio 8 en C - decimar cada N muestras
 void downsampleM(int32_t* vectorIn, int32_t* vectorOut, uint32_t longitud, uint32_t N){
 
 	uint32_t aux = 0;
@@ -213,8 +218,8 @@ void downsampleM(int32_t* vectorIn, int32_t* vectorOut, uint32_t longitud, uint3
 	}
 }
 
+// Ejercicio 9 en C - Invertir vector
 void invertir (uint16_t * vector, uint32_t longitud){
-
 
 	for(uint32_t i=0; i<longitud/2; i++){
 		uint32_t aux = vector[i];
@@ -224,6 +229,7 @@ void invertir (uint16_t * vector, uint32_t longitud){
 
 }
 
+// Ejercicio 10 en C - Eco
 void eco(int16_t * vector, uint32_t longitud, uint32_t samples, uint32_t eco_start){
 
 	uint32_t start = samples*eco_start/1000;
@@ -234,196 +240,269 @@ void eco(int16_t * vector, uint32_t longitud, uint32_t samples, uint32_t eco_sta
 
 }
 
-uint32_t vector32_in[4096];
-	uint32_t vector32_out[15];
-	uint16_t vector16_in[4096];
-	uint16_t vector16_out[15];
+//Vectores de prueba para debug
+uint32_t vector32_in[5];
+uint32_t vector32_out[5];
+uint16_t vector16_in[5];
+uint16_t vector16_out[5];
 
+int16_t vector16_in_eco[4096];
 
-void test_1parte_c(){
+//Test para probar las funciones
+void test(){
 
-	/*
-	uint32_t vector32_in[10];
-	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
-		vector32_in[i]=i;
-	}
-	uint32_t vector32_out[10];
-	for(uint32_t i=0;i<sizeof(vector32_out)/sizeof(vector32_out[0]);i++){
-			vector32_out[i]=i;
-		}
-	zeros(vector32_out,sizeof(vector32_out)/sizeof(vector32_out[0]));
-	productoEscalar32(vector32_in,vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]),10);
-
-	uint16_t vector16_in[10];
-	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-		vector16_in[i]=i;
-	}
-	uint16_t vector16_out[10];
-	productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
-
-	productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-*/
-
-
-
-/*
-	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-		vector16_in[i]=1;
-	}
-
-
-	//filtroVentana10 (vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]));
-
-	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
-		vector32_in[i]=1;
-	}
-	vector32_in[18]=10;
-	//pack32to16(vector32_in, vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
-
-
-	int32_t hola = asm_max (vector32_in, sizeof(vector32_in)/sizeof(vector32_in[0]));
-	*/
-
-	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-		vector16_in[i]=i;
-		}
-
-	eco(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]), 44100, 20);
-
-	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-		vector16_in[i]=i;
-			}
-
-	asm_eco(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]), 44100, 20);
-
-
-	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-			vector16_in[i]=i;
-				}
-
-		asm_eco_simd(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]), 44100, 20);
-
-
-}
-
-
-
-
-void test_1parte_asm(){
-
-
-	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-		vector16_in[i]=1;
-		}
-
-	for(uint32_t i=0;i<sizeof(vector16_out)/sizeof(vector16_out[0]);i++){
-		vector16_out[i]=0;
-			}
-
-
-	productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-
-	for(uint32_t i=0;i<sizeof(vector16_out)/sizeof(vector16_out[0]);i++){
-			vector16_out[i]=0;
-				}
-
-
-	asm_productoEscalar12(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-
-
-	for(uint32_t i=0;i<sizeof(vector16_out)/sizeof(vector16_out[0]);i++){
-				vector16_out[i]=0;
-					}
-
-	asm_productoEscalar12_instrucciones_sat (vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10000);
-	/*
-
-	uint32_t vector32_in[10];
+/*******************************************************************************************/
+	//TEST ZERO
 
 	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
 		vector32_in[i]=i;
 	}
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	zeros(vector32_in, sizeof(vector32_in)/sizeof(vector32_in[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	volatile uint32_t Ciclos = DWT->CYCCNT;
 
-	asm_zeros32(vector32_in,sizeof(vector32_in)/sizeof(vector32_in[0]));
+	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
+		vector32_in[i]=i;
+	}
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_zeros32(vector32_in, sizeof(vector32_in)/sizeof(vector32_in[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-	uint16_t vector16_in[10];
+	DWT->CYCCNT = 0;
+		zeros(vector16_in, sizeof(vector16_in)/sizeof(vector16_in[0]));
+		// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
 	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-		vector16_in[i]=2*i;
+		vector16_in[i]=i;
+	}
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_zeros16(vector16_in, sizeof(vector16_in)/sizeof(vector16_in[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
+/*******************************************************************************************/
+
+	// TEST PRODUCTO ESCALAR 32 BITS
+	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
+		vector32_in[i]=i;
 	}
 
-	asm_zeros16(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]));
+	asm_zeros32(vector32_out, sizeof(vector32_out)/sizeof(vector32_out[0]));
 
-	uint32_t vector32_out[10];
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	productoEscalar32(vector32_in, vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]), 100);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
+	asm_zeros32(vector32_out, sizeof(vector32_out)/sizeof(vector32_out[0]));
+
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_productoEscalar32(vector32_in, vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]), 100);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
+/*******************************************************************************************/
+
+	// TEST PRODUCTO ESCALAR 16 BITS
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=i;
+	}
+
+	asm_zeros16(vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
+
+
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	productoEscalar16(vector16_in, vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]), 100);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
+
+	asm_zeros16(vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
+
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_productoEscalar16(vector16_in, vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]), 100);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
+/*******************************************************************************************/
+
+
+	// TEST PRODUCTO ESCALAR 12 BITS
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=i;
+	}
+
+	asm_zeros16(vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
+
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	productoEscalar12(vector16_in, vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]), 100);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
+
+	asm_zeros16(vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_productoEscalar12(vector16_in, vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]), 100);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_productoEscalar12_instrucciones_sat(vector16_in, vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]), 100);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
+/*******************************************************************************************/
+
+	//TEST FILTRO VETANA
+
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=i;
+	}
+
+	asm_zeros16(vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	filtroVentana10(vector16_in,vector16_out,sizeof(vector16_out)/sizeof(vector16_out[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
+	asm_zeros16(vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_filtroVentana10(vector16_in,vector16_out,sizeof(vector16_out)/sizeof(vector16_out[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
+
+/*******************************************************************************************/
+
+	//TEST PACK 32 to 16
 	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
 			vector32_in[i]=i;
-		}
-
-	for(uint32_t i=0;i<sizeof(vector32_out)/sizeof(vector32_out[0]);i++){
-			vector32_out[i]=i;
 	}
+	asm_zeros16(vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	pack32to16(vector32_in,vector16_out,sizeof(vector16_out)/sizeof(vector16_out[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-	asm_productoEscalar32(vector32_in,vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]),10);
+	asm_zeros16(vector16_out, sizeof(vector16_out)/sizeof(vector16_out[0]));
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_pack32to16(vector32_in,vector16_out,sizeof(vector16_out)/sizeof(vector16_out[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-		vector16_in[i]=1;
+/*******************************************************************************************/
+	//TEST MAX
+
+	//TEST PACK 32 to 16
+	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
+		vector32_in[i]=i;
 	}
-	*/
+	vector32_in[3] = 10000;
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	int32_t maximo = max(vector32_in,sizeof(vector32_in)/sizeof(vector32_in[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-	/*
-	uint16_t vector16_in[20];
-	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-		vector16_in[i]=1;
-	}
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	maximo = asm_max(vector32_in,sizeof(vector32_in)/sizeof(vector32_in[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-	uint16_t vector16_out[20];
-	//asm_productoEscalar16(vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]),10);
+/*******************************************************************************************/
 
-	//asm_filtroVentana (vector16_in,vector16_out,sizeof(vector16_in)/sizeof(vector16_in[0]));
-
-	uint32_t vector32_in[20];
+	//TEST DECIMAR N muestras
 
 	for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
-		vector32_in[i]=0x80000000;
+		vector32_in[i]=i;
 	}
+	asm_zeros32(vector32_out, sizeof(vector32_out)/sizeof(vector32_out[0]));
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	downsampleM(vector32_in, vector32_out, sizeof(vector32_in)/sizeof(vector32_in[0]), 3);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-	asm_pack32to16(vector32_in, vector16_out, sizeof(vector16_in)/sizeof(vector16_in[0]));
-	*/
+	asm_zeros32(vector32_out, sizeof(vector32_out)/sizeof(vector32_out[0]));
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_downsampleM(vector32_in, vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]), 3);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
+/*******************************************************************************************/
+	//TEST INVERTIR
 
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=i;
+	}
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	invertir(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-/*
-		for(uint32_t i=0;i<sizeof(vector32_in)/sizeof(vector32_in[0]);i++){
-			vector32_in[i]=i+1;
-		}
+	for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
+		vector16_in[i]=i;
+	}
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_invertir(vector16_in,sizeof(vector16_in)/sizeof(vector16_in[0]));
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-		for(uint32_t i=0;i<sizeof(vector32_out)/sizeof(vector32_out[0]);i++){
-					vector32_out[i]=0;
-				}
+/*******************************************************************************************/
 
-	downsampleM(vector32_in, vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]),5);
+	//TEST ECO
+	for(uint32_t i=0;i<sizeof(vector16_in_eco)/sizeof(vector16_in_eco[0]);i++){
+		vector16_in_eco[i]=i;
+	}
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	eco(vector16_in_eco, sizeof(vector16_in_eco)/sizeof(vector16_in_eco[0]), 44100, 20);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-	for(uint32_t i=0;i<sizeof(vector32_out)/sizeof(vector32_out[0]);i++){
-						vector32_out[i]=0;
-					}
+	for(uint32_t i=0;i<sizeof(vector16_in_eco)/sizeof(vector16_in_eco[0]);i++){
+		vector16_in_eco[i]=i;
+	}
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_eco(vector16_in_eco, sizeof(vector16_in_eco)/sizeof(vector16_in_eco[0]), 44100, 20);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
-	asm_downsampleM(vector32_in, vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]),5);
-
-
-		for(uint32_t i=0;i<sizeof(vector16_in)/sizeof(vector16_in[0]);i++){
-			vector16_in[i]=i;
-		}
-	// invertir (vector16_in, sizeof(vector16_in)/sizeof(vector16_in[0]));
-
-	 //asm_invertir (vector16_in, sizeof(vector16_in)/sizeof(vector16_in[0]));
-
-*/
-
-
+	for(uint32_t i=0;i<sizeof(vector16_in_eco)/sizeof(vector16_in_eco[0]);i++){
+		vector16_in_eco[i]=i;
+	}
+	// Antes de la función a medir: contador de ciclos a cero
+	DWT->CYCCNT = 0;
+	asm_eco_simd(vector16_in_eco, sizeof(vector16_in_eco)/sizeof(vector16_in_eco[0]), 44100, 20);
+	// Obtiene cantidad de ciclos que demoró la función
+	Ciclos = DWT->CYCCNT;
 
 
 
 }
+
+
 
 /* USER CODE END 0 */
 
@@ -434,8 +513,7 @@ void test_1parte_asm(){
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	test_1parte_c();
-	test_1parte_asm();
+
 
   /* USER CODE END 1 */
 
@@ -464,6 +542,13 @@ int main(void)
   PrivilegiosSVC ();
 
   const uint32_t Resultado = asm_sum (5, 3);
+
+
+  // Activa contador de ciclos (iniciar una sola vez)
+  DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
+
+  test();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

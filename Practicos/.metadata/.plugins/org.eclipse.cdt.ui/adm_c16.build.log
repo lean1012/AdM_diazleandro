@@ -1,10 +1,90 @@
-01:14:40 **** Incremental Build of configuration Debug for project adm_c16 ****
+23:27:07 **** Incremental Build of configuration Debug for project adm_c16 ****
 make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/iot/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.0/Drivers/CMSIS/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/leandro/STM32Cube/Repository/STM32Cube_FW_F4_V1.27.1/Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'test':
+../Core/Src/main.c:276:9: warning: passing argument 1 of 'zeros' from incompatible pointer type [-Wincompatible-pointer-types]
+  276 |   zeros(vector16_in, sizeof(vector16_in)/sizeof(vector16_in[0]));
+      |         ^~~~~~~~~~~
+      |         |
+      |         uint16_t * {aka short unsigned int *}
+../Core/Src/main.c:126:22: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'uint16_t *' {aka 'short unsigned int *'}
+  126 | void zeros(uint32_t *vector, uint32_t longitud) {
+      |            ~~~~~~~~~~^~~~~~
+../Core/Src/main.c:419:23: warning: pointer targets in passing argument 1 of 'max' differ in signedness [-Wpointer-sign]
+  419 |  int32_t maximo = max(vector32_in,sizeof(vector32_in)/sizeof(vector32_in[0]));
+      |                       ^~~~~~~~~~~
+      |                       |
+      |                       uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:192:24: note: expected 'int32_t *' {aka 'long int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  192 | int32_t max (int32_t * vectorIn, uint32_t longitud){
+      |              ~~~~~~~~~~^~~~~~~~
+../Core/Src/main.c:425:19: warning: pointer targets in passing argument 1 of 'asm_max' differ in signedness [-Wpointer-sign]
+  425 |  maximo = asm_max(vector32_in,sizeof(vector32_in)/sizeof(vector32_in[0]));
+      |                   ^~~~~~~~~~~
+      |                   |
+      |                   uint32_t * {aka long unsigned int *}
+In file included from ../Core/Src/main.c:25:
+../Core/Inc/asm_func.h:26:28: note: expected 'int32_t *' {aka 'long int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+   26 | int32_t asm_max (int32_t * vectorIn, uint32_t longitud);
+      |                  ~~~~~~~~~~^~~~~~~~
+../Core/Src/main.c:439:14: warning: pointer targets in passing argument 1 of 'downsampleM' differ in signedness [-Wpointer-sign]
+  439 |  downsampleM(vector32_in, vector32_out, sizeof(vector32_in)/sizeof(vector32_in[0]), 3);
+      |              ^~~~~~~~~~~
+      |              |
+      |              uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:206:27: note: expected 'int32_t *' {aka 'long int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  206 | void downsampleM(int32_t* vectorIn, int32_t* vectorOut, uint32_t longitud, uint32_t N){
+      |                  ~~~~~~~~~^~~~~~~~
+../Core/Src/main.c:439:27: warning: pointer targets in passing argument 2 of 'downsampleM' differ in signedness [-Wpointer-sign]
+  439 |  downsampleM(vector32_in, vector32_out, sizeof(vector32_in)/sizeof(vector32_in[0]), 3);
+      |                           ^~~~~~~~~~~~
+      |                           |
+      |                           uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:206:46: note: expected 'int32_t *' {aka 'long int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  206 | void downsampleM(int32_t* vectorIn, int32_t* vectorOut, uint32_t longitud, uint32_t N){
+      |                                     ~~~~~~~~~^~~~~~~~~
+../Core/Src/main.c:446:18: warning: pointer targets in passing argument 1 of 'asm_downsampleM' differ in signedness [-Wpointer-sign]
+  446 |  asm_downsampleM(vector32_in, vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]), 3);
+      |                  ^~~~~~~~~~~
+      |                  |
+      |                  uint32_t * {aka long unsigned int *}
+In file included from ../Core/Src/main.c:25:
+../Core/Inc/asm_func.h:28:33: note: expected 'int32_t *' {aka 'long int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+   28 | void asm_downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N);
+      |                       ~~~~~~~~~~^~~~~~~~
+../Core/Src/main.c:446:31: warning: pointer targets in passing argument 2 of 'asm_downsampleM' differ in signedness [-Wpointer-sign]
+  446 |  asm_downsampleM(vector32_in, vector32_out,sizeof(vector32_in)/sizeof(vector32_in[0]), 3);
+      |                               ^~~~~~~~~~~~
+      |                               |
+      |                               uint32_t * {aka long unsigned int *}
+In file included from ../Core/Src/main.c:25:
+../Core/Inc/asm_func.h:28:53: note: expected 'int32_t *' {aka 'long int *'} but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+   28 | void asm_downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N);
+      |                                           ~~~~~~~~~~^~~~~~~~~
+../Core/Src/main.c:419:10: warning: variable 'maximo' set but not used [-Wunused-but-set-variable]
+  419 |  int32_t maximo = max(vector32_in,sizeof(vector32_in)/sizeof(vector32_in[0]));
+      |          ^~~~~~
+../Core/Src/main.c:264:20: warning: variable 'Ciclos' set but not used [-Wunused-but-set-variable]
+  264 |  volatile uint32_t Ciclos = DWT->CYCCNT;
+      |                    ^~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:544:18: warning: unused variable 'Resultado' [-Wunused-variable]
+  544 |   const uint32_t Resultado = asm_sum (5, 3);
+      |                  ^~~~~~~~~
+arm-none-eabi-gcc -o "adm_c16.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/leandro/Desktop/UBA/CESE/AdM/AdM_git/Practicos/adm_c16/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="adm_c16.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: adm_c16.elf
+ 
 arm-none-eabi-size   adm_c16.elf 
+arm-none-eabi-objdump -h -S  adm_c16.elf  > "adm_c16.list"
+arm-none-eabi-objcopy  -O binary  adm_c16.elf  "adm_c16.bin"
    text	   data	    bss	    dec	    hex	filename
-  13776	     20	  11716	  25512	   63a8	adm_c16.elf
+  15292	     20	  11748	  27060	   69b4	adm_c16.elf
 Finished building: default.size.stdout
  
+Finished building: adm_c16.bin
+ 
+Finished building: adm_c16.list
+ 
 
-01:14:40 Build Finished. 0 errors, 0 warnings. (took 172ms)
+23:27:08 Build Finished. 0 errors, 10 warnings. (took 420ms)
 

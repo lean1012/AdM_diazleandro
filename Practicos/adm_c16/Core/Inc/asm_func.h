@@ -19,7 +19,7 @@ void asm_productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t 
 
 void asm_productoEscalar12_instrucciones_sat (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitud, uint16_t escalar);
 
-void asm_filtroVentana (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn);
+void asm_filtroVentana10 (uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn);
 
 void asm_pack32to16 (uint32_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn);
 

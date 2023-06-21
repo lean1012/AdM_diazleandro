@@ -11,7 +11,7 @@
 .global asm_productoEscalar16
 .global asm_productoEscalar12
 .global asm_productoEscalar12_instrucciones_sat
-.global asm_filtroVentana
+.global asm_filtroVentana10
 .global asm_pack32to16
 .global asm_max
 .global asm_downsampleM
@@ -221,13 +221,13 @@
 @	r2: longitud del vector de entrada
 
 .thumb_func
-    asm_filtroVentana:
+    asm_filtroVentana10:
     	push {R4-R10}
     	mov r9, r0 //guardo el inicio
     	mov r10, r2
     	lsl r10,1 //multiplico por 2
     	sub r10, 2
-			loop_asm_filtroVentana:
+			loop_asm_filtroVentana10:
 			mov r5, 10 //iterador de ventana
 			mov r6, r0 //puntero
 			add r6 , r6, r5 // empiezo del numero más alto de la ventana +2
@@ -255,7 +255,7 @@
 			add r0,2
 			add r1,2
 			subs r2, 1
-			bne loop_asm_filtroVentana
+			bne loop_asm_filtroVentana10
 		pop {R4-R10}
 		bx lr
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -404,7 +404,6 @@
 .thumb_func
     asm_eco:
     	push {r4-r8}
-
     	mov r4, 0
     	mov r6, 0
     	mul r4, r2, r3  //samples*eco_start
@@ -456,7 +455,7 @@
 		str r7, [r6]
 		add r6, 4
     	add r0,4
-        subs r1, 1
+        subs r1, 2
 			bne loop_asm_eco_simd
 		pop {r4-r9}
 		bx lr

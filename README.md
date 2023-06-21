@@ -158,5 +158,3 @@ Cuando se llama a una función en asembler el compilador salva los registros r0 
 5. ¿Qué es una instrucción SIMD? ¿En qué se aplican y que ventajas reporta su uso? Dé un ejemplo.
 
 Una instrucción SIMD es una instrucción que puede procesar múltiples datos en una sola operación. Estos se aplican generalmente en algoritmos de procesamiento de imágenes. La ventaja que tiene es que obtenemos una mejor perfomance, ya que utilizando las instrucciones "simples" esto llevaría varios ciclos de reloj. Por ejemplo, con SIMD podemos sumar dos números de 16bits a la vez (a1+b1, a2+b2) en cambio, utilizando las instrucciones del micro necesitamos más pasos.
-
-
